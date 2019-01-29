@@ -3,7 +3,7 @@ package web;
 import java.net.*;
 import java.io.*;
 public class HttpServer {
-	public static void main(String[] args) throws IOException {
+	public static void main(String[] args) throws FileNotFoundException,IOException  {
 		ServerSocket serverSocket = null;
 		try {
 			serverSocket = new ServerSocket(35000);
@@ -11,8 +11,9 @@ public class HttpServer {
 			System.err.println("Could not listen on port: 35000.");
 			System.exit(1);
 		}
-		Socket clientSocket = null;
+		
 		while(true) {
+			Socket clientSocket = null;
 			try {
 				System.out.println("Listo para recibir ...");
 				clientSocket = serverSocket.accept();
@@ -27,8 +28,7 @@ public class HttpServer {
 			String get="";
 			while ((inputLine = in .readLine()) != null) {
 				if(j==1) {
-					get=inputLine.substring(5,(inputLine.length()-" HTTP/1.1".length()));
-					System.out.println(get);
+					get=inputLine.substring(5,(inputLine.length()-" HTTP/1.1".length()));					
 					j++;
 				}
 				System.out.println("Received: " + inputLine);
@@ -36,31 +36,31 @@ public class HttpServer {
 					break;
 				}
 			}
-			BufferedReader b=null;
 			
-			try {
-				FileReader f = new FileReader(System.getProperty("C:\\Users\\ItaloPC\\Desktop\\ARSW\\laboratorio2\\")+get);
-	   	     	b = new BufferedReader(f);
-			} catch (Exception e) {
-				System.out.println("no se pudo");
+			String url=System.getProperty("user.dir") + get;
+			System.out.println(url);
+			try {					
+				 BufferedReader readerFile = new BufferedReader(new InputStreamReader(new FileInputStream("C:\\Users\\2135142\\Documents\\ARSW\\laboratorio2datos\\resultado.html"), "UTF8"));
+                 out.println("HTTP/2.0 200 OK");
+                 out.println("Content-Type: text/html");
+                 out.println("\r\n");
+                 while (readerFile.ready()) {
+                     out.println(readerFile.readLine());
+                 }
+			}catch (FileNotFoundException e) {
+				out.println( "<!DOCTYPE html>" + "<html>" + "<head>" + "<meta charset=\"UTF-8\">" + "<title>Title of the document</title>\n" + "</head>" + "<body>" + "File Not Found" + "</body>" + "</html>" );
 			}
-			
-			
-			while ((inputLine = b.readLine()) != null) {				
-				out.println(inputLine);
-				if (! in .ready()) {
-					break;
-				}
-			}
-			
-			outputLine = "<!DOCTYPE html>" + "<html>" + "<head>" + "<meta charset=\"UTF-8\">" + "<title>Title of the document</title>\n" + "</head>" + "<body>" + "My Web Site" + "</body>" + "</html>" + inputLine;
-			out.println(outputLine);
+
+
+
+			//outputLine = "<!DOCTYPE html>" + "<html>" + "<head>" + "<meta charset=\"UTF-8\">" + "<title>Title of the document</title>\n" + "</head>" + "<body>" + "My Web Site" + "</body>" + "</html>" + inputLine;
+			//out.println(outputLine);
 			out.close(); in .close();
 			clientSocket.close();
-			
-			
+
+
 		}
-	
+
 		//serverSocket.close();
 	}
 }
