@@ -34,3 +34,10 @@ la busqueda seria mas rapida si se pudiera tener un control de cuantas veces se 
 
 ![image](https://user-images.githubusercontent.com/42522754/52186386-18ea7480-27f5-11e9-804f-0ced3033c925.png)
 
+#### 50 Threads
+
+![image](https://user-images.githubusercontent.com/42522754/52187219-2a824b00-27fa-11e9-88bd-c430c174a71c.png)
+
+#### 100 Threads
+
+![image](https://user-images.githubusercontent.com/42522754/52187279-8a78f180-27fa-11e9-8dbb-13983c140243.png)
